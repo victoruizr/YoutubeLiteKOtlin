@@ -61,16 +61,20 @@ class HomeFragment : Fragment() {
             videArrayList = ArrayList()
 
             val ref = FirebaseDatabase.getInstance().getReference("Videos")
-        try {
+
             ref.addValueEventListener(object : ValueEventListener {
+
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    videArrayList.clear()
-                    for (videos in snapshot.children) {
-                        val modeloVideos = videos.getValue(Videos::class.java)
-                        videArrayList.add(modeloVideos!!)
+                    try {
+                        videArrayList.clear()
+                        for (videos in snapshot.children) {
+                            val modeloVideos = videos.getValue(Videos::class.java)
+                            videArrayList.add(modeloVideos!!)
+                        }
+                        adaptadorVideo = AdapterVideo(context!!, videArrayList, firebaseAuth, db, 0)
+                        rvVideos.adapter = adaptadorVideo
+                    } catch (e: Exception) {
                     }
-                    adaptadorVideo = AdapterVideo(context!!, videArrayList, firebaseAuth, db, 0)
-                    rvVideos.adapter = adaptadorVideo
 
                 }
 
@@ -78,10 +82,7 @@ class HomeFragment : Fragment() {
 
                 }
             })
-        } catch (x: NullPointerException) {
-        }
-        catch (e: Exception) {
-        }
+
 
 
     }

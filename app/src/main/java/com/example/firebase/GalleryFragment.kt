@@ -37,7 +37,7 @@ class GalleryFragment : Fragment() {
     private fun cargarVideo() {
         firebaseAuth.currentUser?.getUid()?.let {
             db.child("Usuarios").child(it).child("listaVideos")
-                .addListenerForSingleValueEvent(object : ValueEventListener {
+                .addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         val listaVideo: java.util.ArrayList<Videos> = java.util.ArrayList<Videos>()
                         listaVideo.clear()
