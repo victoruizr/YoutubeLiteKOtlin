@@ -26,7 +26,8 @@ class AdapterVideo(
     private var context: Context,
     private var videoArrayList: ArrayList<Videos>?,
     private var firebaseAuth: FirebaseAuth,
-    var db: DatabaseReference
+    var db: DatabaseReference,
+    var id: Int
 
 ) :RecyclerView.Adapter<AdapterVideo.HolderVideo>() {
 
@@ -62,6 +63,10 @@ class AdapterVideo(
 
         holder.descargar.setOnClickListener {
             descargarVideo(modelVideo)
+        }
+
+        if (id?.equals(1)!!){
+            holder.borrar.visibility=View.GONE
         }
 
     }

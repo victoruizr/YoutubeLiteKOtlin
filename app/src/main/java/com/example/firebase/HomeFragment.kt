@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +13,7 @@ import com.example.firebase.Modelo.Usuarios
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import java.lang.NullPointerException
 
 class HomeFragment : Fragment() {
 
@@ -57,10 +57,11 @@ class HomeFragment : Fragment() {
     }
 
     private fun cargarVideos() {
-        try {
+
             videArrayList = ArrayList()
 
             val ref = FirebaseDatabase.getInstance().getReference("Videos")
+        try {
             ref.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     videArrayList.clear()
@@ -68,7 +69,7 @@ class HomeFragment : Fragment() {
                         val modeloVideos = videos.getValue(Videos::class.java)
                         videArrayList.add(modeloVideos!!)
                     }
-                    adaptadorVideo = AdapterVideo(context!!, videArrayList, firebaseAuth, db)
+                    adaptadorVideo = AdapterVideo(context!!, videArrayList, firebaseAuth, db, 0)
                     rvVideos.adapter = adaptadorVideo
 
                 }
@@ -77,8 +78,11 @@ class HomeFragment : Fragment() {
 
                 }
             })
-        } catch (e: Exception) {
+        } catch (x: NullPointerException) {
         }
+        catch (e: Exception) {
+        }
+
 
     }
 

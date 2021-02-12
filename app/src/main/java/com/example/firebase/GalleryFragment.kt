@@ -45,7 +45,7 @@ class GalleryFragment : Fragment() {
                             var v = xVideo.getValue(Videos::class.java)!!
                             listaVideo.add(v)
                         }
-                        adaptadorVideo = AdapterVideo(context!!, listaVideo,firebaseAuth,db)
+                        adaptadorVideo = AdapterVideo(context!!, listaVideo,firebaseAuth,db,1)
                         rvVideos.adapter = adaptadorVideo
                     }
 
